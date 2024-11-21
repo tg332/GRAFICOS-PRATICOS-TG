@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráficos Práticos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.section {
+    padding: 40px;
+    text-align: center;
+}
+
+.section-header {
+    background-color: #6C63FF;
+    color: white;
+    height: 1000px;
+}
+
+.section-header h1 {
+    font-size: 2em;
+    text-align: left;
+}
+
+.section-header span {
+    color: #FFFFFF;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.bt-ultima{
+      align-items: center;
+      background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+      border: 0;
+      border-radius: 8px;
+      box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+      box-sizing: border-box;
+      color: #FFFFFF;
+      display: flex;
+      font-family: Phantomsans, sans-serif;
+      font-size: 18px;
+      justify-content: center;
+      line-height: 1em;
+      max-width: 100%;
+      min-width: 300px;
+      padding: 3px;
+      text-decoration: none;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all .3s;
+      margin:auto;
+      margin-left: 0;
+}
+.bt-ultima:active,
+     .bt-ultima:hover {
+      outline: 0;
+     }
+     
+     .bt-ultima span {
+      background-color: black;
+      padding: 16px 24px;
+      border-radius: 6px;
+      width: 100%;
+      height: 100%;
+      transition: 300ms;
+     }
+     
+     .bt-ultima:hover span {
+      background: none;
+     }
+     
+     .bt-ultima:active {
+      transform: scale(0.9);
+     }
+
+.logo{
+    font-size: 24px;
+    text-transform: uppercase;
+    text-align: left;
+    letter-spacing: 4px;
+    color: #fff;
+    text-decoration: none;
+    transition: .3s;
+    padding: 10px 20px;
+  
+}
+
+.text-content {
+    max-width: 400px;
+    text-align: left;
+    font-size: 20px;
+}
+
+.text-content h2 {
+    font-size: 1.9em;
+    margin-bottom: 10px;
+}
+
+.text-content p {
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.image-placeholder {
+    width: 600px;
+    height: 800px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+}
+
+.section-featured {
+    background-color: #f9f9f9;
+    height: 1000px;
+    background-image: url(/img/4605.jpg);
+    background-position: center;
+    background-size: cover;
+}
+
+.section-featured h2 {
+    margin-bottom: 200px;
+}
+
+.featured-graphics {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-bottom: 20px;
+}
+
+.graphic {
+    width: 250px;
+    height: 250px;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
+    color: #333;
+}
+
+.section-team {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #6C63FF;
+    color: white;
+}
+
+.team-content {
+    max-width: 400px;
+    text-align: left;
+    font-size: 20px;
+}
+
+.section-footer {
+    background-color: #6C63FF;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 40px 20px;
+}
+
+.footer-info h2 {
+    font-size: 1.5em;
+}
+
+.footer-contact input,
+.footer-contact textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: none;
+}
+
+.footer-contact button {
+    width: 100%;
+    background-color: #000000;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+}
+
+</style>
+<body>
+    <header class="section section-header">
+       <a class="logo" href="/">GráficosPráticos</a>
+        <div class="header-content">
+            <div class="text-content">
+                <h2>matemática na prática</h2>
+                <p>Explore a profundidade e a beleza da matemática através dos conceitos essenciais. Aqui, promovemos uma visão prática e simplificada que facilita o entendimento e aplicabilidade, ideal para estudantes e entusiastas da matemática.</p>
+                <button class="bt-ultima" onclick="redirecionar()">
+                    <span class="text">Comece Agora</span>
+                  </button>
+            </div>
+           <img class="image-placeholder" src="/img/undraw_mathematics_-4-otb 1.svg" alt="">
+        </div>
+    </header>
+
+    <section class="section section-featured">
+        <h2>GRÁFICOS EM DESTAQUE</h2>
+        <div class="featured-graphics">
+            <img src="" alt="">
+        </div>
+        <div>
+            
+        </div>
+        <button>Ver Mais</button>
+    </section>
+
+    <section class="section section-team">
+        <img class="image-placeholder" src="/img/undraw_data_points_re_vkpq 1 (1).svg" alt="">
+        <div class="team-content">
+            <h2>MAIS SOBRE NOSSA EQUIPE</h2>
+            <p>Somos especialistas em soluções matemáticas, comprometidos em oferecer excelência e precisão. Nossa equipe é composta por profissionais altamente qualificados, preparados para transformar desafios numéricos em oportunidades de crescimento.</p>
+        </div>
+    </section>
+
+    <footer class="section section-footer">
+        <div class="footer-info">
+            <h2>GRÁFICOS<span>PRÁTICOS</span></h2>
+            <p>Localização: Av Brasil, 123<br>
+               Telefone: (33) 5555-5555<br>
+               Contato: contato@graficospraticos.com
+            </p>
+        </div>
+        <div class="footer-contact">
+            <input type="text" placeholder="Nome">
+            <input type="email" placeholder="Email">
+            <textarea placeholder="Mensagem"></textarea>
+            <button>Enviar</button>
+        </div>
+    </footer>
+</body>
+</html>
+<script src="/script/script.js"></script>

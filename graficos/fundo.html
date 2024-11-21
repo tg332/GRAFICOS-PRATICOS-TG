@@ -1,0 +1,223 @@
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Calculadora e Área de Plotagem</title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link rel="stylesheet" href="/css/style.css">
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body, html {
+                height: 100%;
+                font-family: Arial, sans-serif;
+            }
+            .container {
+                display: flex;
+                height: 100vh;
+            }
+            .sidebar {
+                width: 300px;
+                background-color: #f0f0f0;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+                box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            }
+            .input-area, .plot-button {
+                width: 100%;
+            }
+            #functionInput {
+                width: 100%;
+                padding: 10px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                margin-bottom: 10px;
+            }
+            .calculator {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+                width: 100%;
+            }
+            .calculator button, .plot-button button {
+                padding: 15px;
+                font-size: 18px;
+                background-color: #e0e0ff;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+            .calculator button:hover, .plot-button button:hover {
+                background-color: #c0c0ff;
+            }
+            .plot-button button {
+                background-color: #4CAF50;
+                color: white;
+                font-weight: bold;
+            }
+            /* Fundo quadriculado para a área de plotagem */
+            .plot-area {
+                flex-grow: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                background-image: 
+                    linear-gradient(to right, #ddd 1px, transparent 1px), 
+                    linear-gradient(to bottom, #ddd 1px, transparent 1px);
+                background-size: 20px 20px;
+                background-color: #ffffff;
+                padding: 20px;
+            }
+            /* Estilos para expandir o canvas */
+            .plot-area canvas {
+                width: 100% !important;
+                height: 100% !important;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="sidebar">
+                <div class="input-area">
+                    <input type="text" id="functionInput" placeholder="Digite a função (ex: x * x)">
+                </div>
+                <div class="calculator">
+                    <button onclick="appendValue('1')">1</button>
+                    <button onclick="appendValue('2')">2</button>
+                    <button onclick="appendValue('3')">3</button>
+                    <button onclick="appendValue('+')">+</button>
+                    <button onclick="appendValue('4')">4</button>
+                    <button onclick="appendValue('5')">5</button>
+                    <button onclick="appendValue('6')">6</button>
+                    <button onclick="appendValue('-')">-</button>
+                    <button onclick="appendValue('7')">7</button>
+                    <button onclick="appendValue('8')">8</button>
+                    <button onclick="appendValue('9')">9</button>
+                    <button onclick="appendValue('*')">x</button>
+                    <button onclick="clearInput()">C</button>
+                    <button onclick="appendValue('0')">0</button>
+                    <button onclick="calculate()">=</button>
+                    <button onclick="appendValue('/')">/</button>
+                </div>
+                <div class="plot-button">
+                    <button onclick="plotFunction()">Plotar Gráfico</button>
+                </div>
+            </div>
+            <div class="plot-area">
+                <canvas id="functionChart"></canvas>
+            </div>
+        </div>
+
+        <script>
+            let chart;
+
+            function appendValue(value) {
+                const input = document.getElementById('functionInput');
+                input.value += value;
+            }
+
+            function clearInput() {
+                document.getElementById('functionInput').value = '';
+            }
+
+            function calculate() {
+                const input = document.getElementById('functionInput');
+                try {
+                    let result = eval(input.value);
+                    input.value = result;
+                } catch (error) {
+                    alert('Expressão inválida');
+                }
+            }
+
+            function plotFunction() {
+                const inputFunction = document.getElementById('functionInput').value;
+
+                // Valida e cria a função do usuário
+                let func;
+                try {
+                    func = new Function('x', `return ${inputFunction}`);
+                } catch (error) {
+                    alert('Função inválida');
+                    return;
+                }
+
+                // Gera pontos de dados para o gráfico
+                const dataPoints = generateDataPoints(func);
+
+                // Configuração e renderização do gráfico
+                const config = {
+                    type: 'line',
+                    data: {
+                        datasets: [{
+                            label: `Função: ${inputFunction}`,
+                            data: dataPoints,
+                            borderColor: 'blue',
+                            backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                            fill: false,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false, // Garante que o gráfico ocupe toda a área
+                        scales: {
+                            x: {
+                                type: 'linear',
+                                position: 'bottom',
+                                title: {
+                                    display: true,
+                                    text: 'x'
+                                },
+                                grid: {
+                                    color: 'rgba(0,0,0,0)' // Esconde a grid padrão do Chart.js
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'y'
+                                },
+                                grid: {
+                                    color: 'rgba(0,0,0,0)' // Esconde a grid padrão do Chart.js
+                                }
+                            }
+                        }
+                    }
+                };
+
+                // Destroi o gráfico anterior, se existir
+                if (chart) {
+                    chart.destroy();
+                }
+
+                const ctx = document.getElementById('functionChart').getContext('2d');
+                chart = new Chart(ctx, config);
+            }
+
+            function generateDataPoints(func, range = [-10, 10], step = 0.1) {
+                const data = [];
+                for (let x = range[0]; x <= range[1]; x += step) {
+                    try {
+                        const y = func(x);
+                        if (isFinite(y)) {
+                            data.push({ x, y });
+                        }
+                    } catch (error) {
+                        console.warn(`Valor inválido para x=${x}`);
+                    }
+                }
+                return data;
+            }
+        </script>
+    </body>
+    </html>
